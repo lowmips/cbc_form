@@ -96,7 +96,6 @@ def main():
             config["location"],
             config["processor_id"],
             config["file_path"],
-            credentials_path=config.get("credentials_path")  # Optional
         )
         extracted_data = extract_form_data(document)
         csv_data = convert_to_csv(extracted_data)
