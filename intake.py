@@ -25,18 +25,13 @@ def process_document_ai(
     processor_id: str,
     file_path: str,
     mime_type: str = "application/pdf",
-    credentials_path: str = None
 ) -> documentai.Document:
     """Processes a document using Google Cloud Document AI."""
 
     # Instantiates a client
-    if credentials_path:
-        credentials = service_account.Credentials.from_service_account_file(credentials_path)
-        client_options = {"api_endpoint": f"{location}-documentai.googleapis.com"}
-        client = documentai.DocumentProcessorServiceClient(client_options=client_options, credentials=credentials)
-    else:  # Rely on GOOGLE_APPLICATION_CREDENTIALS
-        client_options = {"api_endpoint": f"{location}-documentai.googleapis.com"}
-        client = documentai.DocumentProcessorServiceClient(client_options=client_options)
+    client_options = {"api_endpoint": f"{location}-documentai.googleapis.com"}
+    client = documentai.DocumentProcessorServiceClient(client_options=client_options)
+
 
     # The full resource name of the processor, e.g.:
     # projects/{project_id}/locations/{location}/processors/{processor_id}
