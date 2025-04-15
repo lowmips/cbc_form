@@ -47,7 +47,7 @@ def process_document_ai(
         image_content = f.read()
 
     # Configure the process request
-    document = {"content": image_content, "mime_type": mime_type}
+    document = documentai.Document(content=image_content, mime_type=mime_type)  # Create a Document object
 
     # Set the request for processing the document
     request = documentai.ProcessRequest(name=name, document=document)
@@ -55,7 +55,6 @@ def process_document_ai(
     # Recognizes text in the document
     result = client.process_document(request=request)
     return result.document
-
 
 def extract_form_data(document: documentai.Document):
     """Extracts form data (field names and values) from a Document AI Document object."""
