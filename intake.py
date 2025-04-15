@@ -25,7 +25,7 @@ def process_document_ai(
     processor_id: str,
     file_path: str,
     mime_type: str = "application/pdf",
-    credentials_path: str = None  # Make credentials_path required
+    credentials_path: str = None
 ) -> documentai.Document:
     """Processes a document using Google Cloud Document AI."""
 
@@ -50,7 +50,9 @@ def process_document_ai(
     document = documentai.Document(content=image_content, mime_type=mime_type)  # Create a Document object
 
     # Set the request for processing the document
-    request = documentai.ProcessRequest(name=name, document=document)
+    request = documentai.ProcessRequest() # Creating an empty request
+    request.name = name
+    request.document = document
 
     # Recognizes text in the document
     result = client.process_document(request=request)
