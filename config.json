@@ -4,5 +4,5 @@
   "processor_id": "your-processor-id",
   "file_path": "path/to/your/document.pdf",
   "output_csv_path": "output.csv",
-  "credentials_path": "path/to/your/credentials.json"  // Optional, remove if using GOOGLE_APPLICATION_CREDENTIALS
+  "credentials_path": "path/to/your/credentials.json"
 }
