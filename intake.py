@@ -25,12 +25,17 @@ def process_document_ai(
     processor_id: str,
     file_path: str,
     mime_type: str = "application/pdf",
+    credentials_path: str = None  # Make credentials_path required
 ) -> documentai.Document:
     """Processes a document using Google Cloud Document AI."""
 
     # Instantiates a client
-    client_options = {"api_endpoint": f"{location}-documentai.googleapis.com"}
-    client = documentai.DocumentProcessorServiceClient(client_options=client_options)
+    if credentials_path:
+        credentials = service_account.Credentials.from_service_account_file(credentials_path)
+        client_options = {"api_endpoint": f"{location}-documentai.googleapis.com"}
+        client = documentai.DocumentProcessorServiceClient(client_options=client_options, credentials=credentials)
+    else:
+        raise ValueError("credentials_path must be provided in config.json")  # Force it to be provided
 
 
     # The full resource name of the processor, e.g.:
@@ -96,6 +101,7 @@ def main():
             config["location"],
             config["processor_id"],
             config["file_path"],
+            credentials_path=config["credentials_path"] # THIS IS THE MOST IMPORTANT LINE
         )
         extracted_data = extract_form_data(document)
         csv_data = convert_to_csv(extracted_data)
